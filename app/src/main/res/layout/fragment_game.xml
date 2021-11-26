@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="dadm.scaffold.counter.GameFragment">
+
+    <RelativeLayout
+        android:layout_width="@dimen/game_stats_menu_width"
+        android:layout_height="match_parent">
+        <!-- Lives and score go here -->
+        <TextView
+            android:id="@+id/score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/game_stats_margin"
+            android:layout_marginLeft="@dimen/game_stats_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="score"
+            android:textColor="@color/text_color" />
+
+        <TextView
+            android:id="@+id/score_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/score_title"
+            android:layout_alignStart="@+id/score_title"
+            android:layout_alignLeft="@+id/score_title"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="000000"
+            android:textColor="@color/text_color" />
+
+        <TextView
+            android:id="@+id/lives_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/score_value"
+            android:layout_alignStart="@+id/score_value"
+            android:layout_alignLeft="@+id/score_value"
+            android:layout_marginTop="30dp"
+            android:text="lives"
+            android:textColor="@color/text_color" />
+
+        <LinearLayout
+            android:id="@+id/lives_value"
+            android:layout_width="@dimen/game_stats_menu_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lives_title"
+            android:layout_alignStart="@+id/lives_title"
+            android:layout_alignLeft="@+id/lives_title"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/game_stats_menu_width"
+        android:layout_marginRight="@dimen/game_stats_menu_width"
+        android:background="@color/colorAccent"
+        android:padding="2dp">
+
+        <dadm.scaffold.engine.StandardGameView
+            android:id="@+id/gameView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <include layout="@layout/view_joystick" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_play_pause"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="top|end"-->
+    <!--        android:layout_marginTop="@dimen/activity_vertical_margin"-->
+    <!--        android:layout_marginEnd="@dimen/activity_vertical_margin"-->
+    <!--        android:layout_marginRight="@dimen/activity_vertical_margin"-->
+    <!--        android:text="@string/pause" />-->
+
+    <ImageView
+        android:id="@+id/btn_play_pause"
+        android:layout_width="@dimen/pause_btn_size"
+        android:layout_height="@dimen/pause_btn_size"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/pause_btn_margin"
+        android:background="@drawable/robot"
+        android:src="@drawable/robot" />
+
+
+</FrameLayout>
