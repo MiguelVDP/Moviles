@@ -3,7 +3,9 @@ package dadm.scaffold.engine;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -17,10 +19,14 @@ public abstract class Sprite extends ScreenGameObject {
 
     private final Matrix matrix = new Matrix();
 
+    private Paint mPaint;
+
+
     protected Sprite (GameEngine gameEngine, int drawableRes) {
         Resources r = gameEngine.getContext().getResources();
         Drawable spriteDrawable = r.getDrawable(drawableRes);
 
+        mPaint=new Paint();
         this.pixelFactor = gameEngine.pixelFactor;
 
         this.height = (int) (spriteDrawable.getIntrinsicHeight() * this.pixelFactor);
@@ -42,6 +48,10 @@ public abstract class Sprite extends ScreenGameObject {
                 || positionY < - height) {
             return;
         }
+
+        mPaint.setColor(Color.YELLOW);
+        canvas.drawCircle((int)(positionX+width/2),(int)(positionY+height/2),(int)radius,mPaint);
+
         matrix.reset();
         matrix.postScale((float) pixelFactor, (float) pixelFactor);
         matrix.postTranslate((float) positionX, (float) positionY);

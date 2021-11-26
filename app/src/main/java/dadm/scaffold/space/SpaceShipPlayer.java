@@ -13,7 +13,7 @@ import dadm.scaffold.sound.GameEvent;
 public class SpaceShipPlayer extends Sprite {
 
     private static final int INITIAL_BULLET_POOL_AMOUNT = 6;
-    private static final long TIME_BETWEEN_BULLETS = 250;
+    private static final long TIME_BETWEEN_BULLETS = 375;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
 
@@ -23,7 +23,7 @@ public class SpaceShipPlayer extends Sprite {
 
 
     public SpaceShipPlayer(GameEngine gameEngine){
-        super(gameEngine, R.drawable.ship);
+        super(gameEngine, R.drawable.xwing);
         speedFactor = pixelFactor * 100d / 1000d; // We want to move at 100px per second on a 400px tall screen
         maxX = gameEngine.width - width;
         maxY = gameEngine.height - height;
@@ -83,11 +83,14 @@ public class SpaceShipPlayer extends Sprite {
     private void checkFiring(long elapsedMillis, GameEngine gameEngine) {
         if (timeSinceLastFire > TIME_BETWEEN_BULLETS) {
             Bullet bullet = getBullet();
-            if (bullet == null) {
+            Bullet bullet2= getBullet();
+            if (bullet == null || bullet2==null) {
                 return;
             }
-            bullet.init(this, positionX + width/2, positionY);
+            bullet.init(this, positionX+7 , positionY);
+            bullet2.init(this, positionX + width -7 , positionY);
             gameEngine.addGameObject(bullet);
+            gameEngine.addGameObject(bullet2);
             timeSinceLastFire = 0;
             gameEngine.onGameEvent(GameEvent.LaserFired);
         }else if(gameEngine.theInputController.isFiring){

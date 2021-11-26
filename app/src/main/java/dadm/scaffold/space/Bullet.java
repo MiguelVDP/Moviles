@@ -17,7 +17,7 @@ public class Bullet extends Sprite {
     private GameEngine ge;
 
     public Bullet(GameEngine gameEngine){
-        super(gameEngine, R.drawable.bullet);
+        super(gameEngine, R.drawable.bulletxwing);
 
         speedFactor = gameEngine.pixelFactor * -300d / 1000d;
 

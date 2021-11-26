@@ -1,5 +1,6 @@
 package dadm.scaffold.engine;
 
+import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public abstract class ScreenGameObject extends GameObject {
@@ -35,5 +36,6 @@ public abstract class ScreenGameObject extends GameObject {
         double collisionDistance = (radius + other.radius);
         return squareDistance <= collisionDistance*collisionDistance;
     }
+
 
 }
