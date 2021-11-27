@@ -12,5 +12,6 @@
     <dimen name="square_button_border">6dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="btn_sound_size">60dp</dimen>
+    <dimen name="life_size">30dp</dimen>
 
 </resources>

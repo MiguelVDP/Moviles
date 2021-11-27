@@ -15,6 +15,7 @@ import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.FramesPerSecondCounter;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameView;
+import dadm.scaffold.engine.LivesCounter;
 import dadm.scaffold.input.JoystickInputController;
 import dadm.scaffold.space.GameController;
 import dadm.scaffold.space.*;
@@ -54,6 +55,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
                 theGameEngine.addGameObject(new GameController(theGameEngine));
                 theGameEngine.addGameObject(new ScoreGameObject(view, R.id.score_value));
+                theGameEngine.addGameObject(new LivesCounter(getView(), R.id.lives_value));
                 theGameEngine.startGame();
             }
         });
