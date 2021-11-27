@@ -3,6 +3,8 @@ package dadm.scaffold.engine;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import dadm.scaffold.sound.GameEvent;
+
 public abstract class ScreenGameObject extends GameObject {
 
     protected double positionX;

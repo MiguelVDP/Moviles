@@ -4,6 +4,7 @@ import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
 import dadm.scaffold.engine.Sprite;
+import dadm.scaffold.sound.GameEvent;
 
 public class Asteroid extends Sprite {
 
@@ -57,6 +58,7 @@ public class Asteroid extends Sprite {
         }
         // Check of the sprite goes out of the screen and return it to the pool if so
         if (positionY > gameEngine.height) {
+            gameEngine.onGameEvent(GameEvent.AsteroidMissed);
             // Return to the pool
             gameEngine.removeGameObject(this);
             //In case of enemy spaceships it is also recommended to return them into the pull back again
