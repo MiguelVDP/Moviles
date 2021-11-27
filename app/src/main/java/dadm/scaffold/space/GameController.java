@@ -10,6 +10,9 @@ import java.util.List;
 import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
+import dadm.scaffold.engine.LivesCounter;
+import dadm.scaffold.sound.GameControllerState;
+import dadm.scaffold.sound.GameEvent;
 
 public class GameController extends GameObject {
 
@@ -18,12 +21,19 @@ public class GameController extends GameObject {
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private int enemiesSpawned;
     private TextView scoreText;
+    private long waitingTime;
+    private static final int INITIAL_LIFES = 4;
+    private static final long STOPPING_WAVE_WAITING_TIME = 2000;
+    private GameEngine gE;
+    private GameControllerState state;
+    private int numLifes;
 
     private int score;
 
     public GameController(GameEngine gameEngine) {
+        this.gE = gameEngine;
         // We initialize the pool of items now
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
         }
     }
@@ -32,8 +42,17 @@ public class GameController extends GameObject {
     public void startGame() {
         currentMillis = 0;
         enemiesSpawned = 0;
+        waitingTime = 0;
+        numLifes = INITIAL_LIFES;
+
+        for (int i = 0; i < INITIAL_LIFES; i++) {
+            gE.onGameEvent(GameEvent.LifeAdded);
+        }
+
+        state = GameControllerState.PlacingSpaceship;
+
         //Score a 0 cuando comienza una partida
-        score=0;
+        score = 0;
         //scoreText=(TextView)findViewById(R.id);
     }
 
@@ -42,7 +61,7 @@ public class GameController extends GameObject {
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
         currentMillis += elapsedMillis;
 
-        long waveTimestamp = enemiesSpawned*TIME_BETWEEN_ENEMIES; //spawn time for enemies
+        long waveTimestamp = enemiesSpawned * TIME_BETWEEN_ENEMIES; //spawn time for enemies
         if (currentMillis > waveTimestamp) { //if current time is greater than spawn time, then spawn
             // Spawn a new enemy
             Asteroid a = asteroidPool.remove(0);
@@ -50,19 +69,58 @@ public class GameController extends GameObject {
             gameEngine.addGameObject(a);
             enemiesSpawned++;
             return;
+        } else if (state == GameControllerState.StoppingWave) {
+            waitingTime += elapsedMillis;
+            if (waitingTime > STOPPING_WAVE_WAITING_TIME) {
+                state = GameControllerState.PlacingSpaceship;
+            }
+        } else if (state == GameControllerState.PlacingSpaceship) {
+            if (numLifes == 0) {
+                gameEngine.onGameEvent(GameEvent.GameOver);
+            } else {
+                numLifes--;
+                gameEngine.onGameEvent(GameEvent.LifeLost);
+                SpaceShipPlayer newLife = new SpaceShipPlayer(gameEngine);
+                newLife.startGame();
+                // We wait to start spawning more enemies
+                state = GameControllerState.Waiting;
+                waitingTime = 0;
+            }
+        }else if (state == GameControllerState.Waiting) {
+            waitingTime += elapsedMillis;
+            if (waitingTime > STOPPING_WAVE_WAITING_TIME) {
+                state = GameControllerState.SpawningEnemies;
+            }
+        }
+
+    }
+
+
+
+        @Override
+        public void onDraw (Canvas canvas){
+            // This game object does not draw anything
+        }
+
+        public void returnToPool (Asteroid asteroid){
+            asteroidPool.add(asteroid);
+        }
+
+        public void addScore () {
+            this.score++;
+        }
+
+        @Override
+        public void onGameEvent (GameEvent gameEvent){
+            super.onGameEvent(gameEvent);
+            if (gameEvent == GameEvent.SpaceshipHit) {
+                state = GameControllerState.StoppingWave;
+                waitingTime = 500;
+            } else if (gameEvent == GameEvent.GameOver) {
+                state = GameControllerState.GameOver;
+            } else if (gameEvent == GameEvent.LifeAdded) {
+                numLifes++;
+            }
         }
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-        // This game object does not draw anything
-    }
-
-    public void returnToPool(Asteroid asteroid) {
-        asteroidPool.add(asteroid);
-    }
-
-    public void addScore(){
-        this.score++;
-    }
-}
