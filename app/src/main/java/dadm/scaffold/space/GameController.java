@@ -16,17 +16,17 @@ import dadm.scaffold.sound.GameEvent;
 
 public class GameController extends GameObject {
 
-    private static final int TIME_BETWEEN_ENEMIES = 500; //ms
+    private static final int TIME_BETWEEN_ENEMIES = 1000; //ms
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private int enemiesSpawned;
     private TextView scoreText;
     private long waitingTime;
     private static final int INITIAL_LIFES = 4;
-    private static final long STOPPING_WAVE_WAITING_TIME = 2000;
+    private static final long STOPPING_WAVE_WAITING_TIME = 5000;
     private GameEngine gE;
     private GameControllerState state;
-    private int numLifes;
+    private int numLives=0;
 
     private int score;
 
@@ -43,7 +43,7 @@ public class GameController extends GameObject {
         currentMillis = 0;
         enemiesSpawned = 0;
         waitingTime = 0;
-        numLifes = INITIAL_LIFES;
+
 
         for (int i = 0; i < INITIAL_LIFES; i++) {
             gE.onGameEvent(GameEvent.LifeAdded);
@@ -75,12 +75,13 @@ public class GameController extends GameObject {
                 state = GameControllerState.PlacingSpaceship;
             }
         } else if (state == GameControllerState.PlacingSpaceship) {
-            if (numLifes == 0) {
+            if (numLives == 0) {
                 gameEngine.onGameEvent(GameEvent.GameOver);
             } else {
-                numLifes--;
+                numLives--;
                 gameEngine.onGameEvent(GameEvent.LifeLost);
                 SpaceShipPlayer newLife = new SpaceShipPlayer(gameEngine);
+                gameEngine.addGameObject(newLife);
                 newLife.startGame();
                 // We wait to start spawning more enemies
                 state = GameControllerState.Waiting;
@@ -106,20 +107,16 @@ public class GameController extends GameObject {
             asteroidPool.add(asteroid);
         }
 
-        public void addScore () {
-            this.score++;
-        }
-
         @Override
         public void onGameEvent (GameEvent gameEvent){
             super.onGameEvent(gameEvent);
             if (gameEvent == GameEvent.SpaceshipHit) {
                 state = GameControllerState.StoppingWave;
-                waitingTime = 500;
+                waitingTime = 0;
             } else if (gameEvent == GameEvent.GameOver) {
                 state = GameControllerState.GameOver;
             } else if (gameEvent == GameEvent.LifeAdded) {
-                numLifes++;
+                numLives++;
             }
         }
     }
