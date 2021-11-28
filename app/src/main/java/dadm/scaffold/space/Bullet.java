@@ -10,6 +10,8 @@ public class Bullet extends Sprite {
 
     private double speedFactor;
 
+    private double speedX, speedY;
+
     private SpaceShipPlayer parent;
 
     private GameController gc;
@@ -24,18 +26,18 @@ public class Bullet extends Sprite {
         ge=gameEngine;
     }
 
-
-
     @Override
     public void startGame() {
         gc=(GameController) ge.getObject(GameController.class);
-
     }
 
     @Override
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
-        positionY += speedFactor * elapsedMillis;
-        if (positionY <  0.1) {
+
+            positionX += speedX * elapsedMillis;
+            positionY += speedY * elapsedMillis;
+
+        if (positionY <  0.1 || positionY < 0.1 || positionX > gameEngine.width) {
             gameEngine.removeGameObject(this);
             // And return it to the pool
             parent.releaseBullet(this);
@@ -43,9 +45,14 @@ public class Bullet extends Sprite {
     }
 
 
-    public void init(SpaceShipPlayer parentPlayer, double initPositionX, double initPositionY) {
+    public void init(SpaceShipPlayer parentPlayer, double initPositionX, double initPositionY,
+                     double angle) {
         positionX = initPositionX - width/2;
         positionY = initPositionY - height/2;
+
+        speedX = speedFactor * Math.sin(angle);
+        speedY = speedFactor * Math.cos(angle);
+
         parent = parentPlayer;
     }
 

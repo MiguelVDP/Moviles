@@ -87,14 +87,16 @@ public class SpaceShipPlayer extends Sprite {
             if (bullet == null || bullet2==null) {
                 return;
             }
-            bullet.init(this, positionX+7 , positionY);
-            bullet2.init(this, positionX + width -7 , positionY);
+            double angle = 0;
+            if(gameEngine.theInputController.isFiring){
+                angle = 0.523599;
+            }
+            bullet.init(this, positionX+7 , positionY, angle);
+            bullet2.init(this, positionX + width -7 , positionY, -angle);
             gameEngine.addGameObject(bullet);
             gameEngine.addGameObject(bullet2);
             timeSinceLastFire = 0;
             gameEngine.onGameEvent(GameEvent.LaserFired);
-        }else if(gameEngine.theInputController.isFiring){
-
         }
         else {
             timeSinceLastFire += elapsedMillis;

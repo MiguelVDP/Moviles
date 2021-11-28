@@ -22,7 +22,7 @@ public class GameController extends GameObject {
     private int enemiesSpawned;
     private TextView scoreText;
     private long waitingTime;
-    private static final int INITIAL_LIFES = 1;
+    private static final int INITIAL_LIFES = 4;
     private static final long STOPPING_WAVE_WAITING_TIME = 2000;
     private GameEngine gE;
     private GameControllerState state;
