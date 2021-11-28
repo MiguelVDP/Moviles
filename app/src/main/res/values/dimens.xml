@@ -13,5 +13,7 @@
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="btn_sound_size">60dp</dimen>
     <dimen name="life_size">30dp</dimen>
+    <dimen name="dialog_width">300dp</dimen>
+    <dimen name="dialog_height">180dp</dimen>
 
 </resources>

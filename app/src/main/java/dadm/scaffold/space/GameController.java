@@ -1,16 +1,13 @@
 package dadm.scaffold.space;
 
 import android.graphics.Canvas;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
-import dadm.scaffold.engine.LivesCounter;
 import dadm.scaffold.sound.GameControllerState;
 import dadm.scaffold.sound.GameEvent;
 
@@ -26,7 +23,7 @@ public class GameController extends GameObject {
     private static final long STOPPING_WAVE_WAITING_TIME = 5000;
     private GameEngine gE;
     private GameControllerState state;
-    private int numLives=0;
+    private int numLives = 0;
 
     private int score;
 
@@ -59,16 +56,18 @@ public class GameController extends GameObject {
     //In this update, we can add enemy ships
     @Override
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
-        currentMillis += elapsedMillis;
+        if (state == GameControllerState.SpawningEnemies) {
+            currentMillis += elapsedMillis;
 
-        long waveTimestamp = enemiesSpawned * TIME_BETWEEN_ENEMIES; //spawn time for enemies
-        if (currentMillis > waveTimestamp) { //if current time is greater than spawn time, then spawn
-            // Spawn a new enemy
-            Asteroid a = asteroidPool.remove(0);
-            a.init(gameEngine);
-            gameEngine.addGameObject(a);
-            enemiesSpawned++;
-            return;
+            long waveTimestamp = enemiesSpawned * TIME_BETWEEN_ENEMIES; //spawn time for enemies
+            if (currentMillis > waveTimestamp) { //if current time is greater than spawn time, then spawn
+                // Spawn a new enemy
+                Asteroid a = asteroidPool.remove(0);
+                a.init(gameEngine);
+                gameEngine.addGameObject(a);
+                enemiesSpawned++;
+                return;
+            }
         } else if (state == GameControllerState.StoppingWave) {
             waitingTime += elapsedMillis;
             if (waitingTime > STOPPING_WAVE_WAITING_TIME) {
@@ -87,37 +86,38 @@ public class GameController extends GameObject {
                 state = GameControllerState.Waiting;
                 waitingTime = 0;
             }
-        }else if (state == GameControllerState.Waiting) {
+        } else if (state == GameControllerState.Waiting) {
             waitingTime += elapsedMillis;
             if (waitingTime > STOPPING_WAVE_WAITING_TIME) {
                 state = GameControllerState.SpawningEnemies;
             }
+        } else if (state == GameControllerState.GameOver) {
+            gameEngine.stopGame();
         }
 
     }
 
 
+    @Override
+    public void onDraw(Canvas canvas) {
+        // This game object does not draw anything
+    }
 
-        @Override
-        public void onDraw (Canvas canvas){
-            // This game object does not draw anything
-        }
+    public void returnToPool(Asteroid asteroid) {
+        asteroidPool.add(asteroid);
+    }
 
-        public void returnToPool (Asteroid asteroid){
-            asteroidPool.add(asteroid);
-        }
-
-        @Override
-        public void onGameEvent (GameEvent gameEvent){
-            super.onGameEvent(gameEvent);
-            if (gameEvent == GameEvent.SpaceshipHit) {
-                state = GameControllerState.StoppingWave;
-                waitingTime = 0;
-            } else if (gameEvent == GameEvent.GameOver) {
-                state = GameControllerState.GameOver;
-            } else if (gameEvent == GameEvent.LifeAdded) {
-                numLives++;
-            }
+    @Override
+    public void onGameEvent(GameEvent gameEvent) {
+        super.onGameEvent(gameEvent);
+        if (gameEvent == GameEvent.SpaceshipHit) {
+            state = GameControllerState.StoppingWave;
+            waitingTime = 0;
+        } else if (gameEvent == GameEvent.GameOver) {
+            state = GameControllerState.GameOver;
+        } else if (gameEvent == GameEvent.LifeAdded) {
+            numLives++;
         }
     }
+}
 

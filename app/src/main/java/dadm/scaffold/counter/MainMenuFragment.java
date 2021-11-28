@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import dadm.scaffold.BaseFragment;
 import dadm.scaffold.R;
 import dadm.scaffold.ScaffoldActivity;
+import dadm.scaffold.input.QuitDialog;
 
 
-public class MainMenuFragment extends BaseFragment implements View.OnClickListener {
+public class MainMenuFragment extends BaseFragment implements View.OnClickListener, QuitDialog.QuitDialogListener {
     public MainMenuFragment() {
     }
 
@@ -34,5 +35,21 @@ public class MainMenuFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         ((ScaffoldActivity)getActivity()).startGame();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        boolean consumed = super.onBackPressed();
+        if (!consumed){
+            QuitDialog quitDialog = new QuitDialog(getScaffoldActivity());
+            quitDialog.setListener(this);
+            showDialog(quitDialog);
+        }
+        return true;
+    }
+
+    @Override
+    public void exit() {
+        getScaffoldActivity().finish();
     }
 }

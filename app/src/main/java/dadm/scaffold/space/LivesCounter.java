@@ -1,10 +1,12 @@
-package dadm.scaffold.engine;
+package dadm.scaffold.space;
 
 import android.graphics.Canvas;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import dadm.scaffold.R;
+import dadm.scaffold.engine.GameEngine;
+import dadm.scaffold.engine.GameObject;
 import dadm.scaffold.sound.GameEvent;
 
 public class LivesCounter extends GameObject {

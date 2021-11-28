@@ -52,7 +52,7 @@
             android:layout_alignStart="@+id/lives_title"
             android:layout_alignLeft="@+id/lives_title"
             android:layout_marginTop="30dp"
-            android:orientation="horizontal" />
+            android:orientation="vertical" />
 
 
     </RelativeLayout>
