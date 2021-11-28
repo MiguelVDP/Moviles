@@ -84,13 +84,14 @@
     <!--        android:text="@string/pause" />-->
 
     <ImageView
+        style="@style/iconButton"
         android:id="@+id/btn_play_pause"
         android:layout_width="@dimen/pause_btn_size"
         android:layout_height="@dimen/pause_btn_size"
         android:layout_gravity="top|end"
-        android:layout_marginTop="@dimen/pause_btn_margin"
-        android:background="@drawable/robot"
-        android:src="@drawable/robot" />
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/pause" />
 
 
 </FrameLayout>

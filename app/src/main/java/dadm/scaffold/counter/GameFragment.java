@@ -14,6 +14,7 @@ import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.FramesPerSecondCounter;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameView;
+import dadm.scaffold.input.PauseDialog;
 import dadm.scaffold.space.LivesCounter;
 import dadm.scaffold.input.JoystickInputController;
 import dadm.scaffold.space.GameController;
@@ -21,7 +22,8 @@ import dadm.scaffold.space.*;
 import dadm.scaffold.space.SpaceShipPlayer;
 
 
-public class GameFragment extends BaseFragment implements View.OnClickListener {
+public class GameFragment extends BaseFragment implements View.OnClickListener,
+        PauseDialog.PauseDialogListener {
     private GameEngine theGameEngine;
 
     public GameFragment() {
@@ -89,49 +91,26 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             pauseGameAndShowPauseDialog();
             return true;
         }
-        return false;
+        return super.onBackPressed();
     }
 
     private void pauseGameAndShowPauseDialog() {
+        if(theGameEngine.isPaused()){ return; }
         theGameEngine.pauseGame();
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.pause_dialog_title)
-                .setMessage(R.string.pause_dialog_message)
-                .setPositiveButton(R.string.resume, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        theGameEngine.resumeGame();
-                    }
-                })
-                .setNegativeButton(R.string.stop, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        theGameEngine.stopGame();
-                        ((ScaffoldActivity)getActivity()).navigateBack();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        theGameEngine.resumeGame();
-                    }
-                })
-                .create()
-                .show();
 
+        PauseDialog dialog = new PauseDialog(getScaffoldActivity());
+        dialog.setListener(this);
+        showDialog(dialog);
     }
 
-//    private void playOrPause() {
-//        Button button = (Button) getView().findViewById(R.id.btn_play_pause);
-//        if (theGameEngine.isPaused()) {
-//            theGameEngine.resumeGame();
-//            button.setText(R.string.pause);
-//        }
-//        else {
-//            theGameEngine.pauseGame();
-//            button.setText(R.string.resume);
-//        }
-//    }
+    @Override
+    public void exitGame() {
+        theGameEngine.stopGame();
+        getScaffoldActivity().navigateBack();
+    }
+
+    @Override
+    public void resumeGame() {
+        theGameEngine.resumeGame();
+    }
 }

@@ -1,6 +1,7 @@
 package dadm.scaffold.sound;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -21,9 +22,12 @@ public final class SoundManager {
 	private Context context;
 	private SoundPool soundPool;
 	private MediaPlayer bgPlayer;
+	public boolean sfxOn, musicOn;
 
-	public SoundManager(Context context) {
+	public SoundManager(Context context, boolean sfx, boolean music) {
 		this.context = context;
+		sfxOn = sfx;
+		musicOn = music;
 		loadSounds();
 		loadMusic();
 	}
@@ -39,10 +43,12 @@ public final class SoundManager {
 	}
 
 	public void playSoundForGameEvent(GameEvent event) {
-		Integer soundId = soundsMap.get(event);
-		if (soundId != null) {
-			// Left Volume, Right Volume, priority (0 == lowest), loop (0 == no) and rate (1.0 normal playback rate)
-			soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
+		if(sfxOn){
+			Integer soundId = soundsMap.get(event);
+			if (soundId != null) {
+				// Left Volume, Right Volume, priority (0 == lowest), loop (0 == no) and rate (1.0 normal playback rate)
+				soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
+			}
 		}
 	}
 
@@ -64,7 +70,9 @@ public final class SoundManager {
 			bgPlayer.setLooping(true);
 			bgPlayer.setVolume(DEFAULT_MUSIC_VOLUME, DEFAULT_MUSIC_VOLUME);
 			bgPlayer.prepare();
-			bgPlayer.start();
+			if(musicOn){
+				bgPlayer.start();
+			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -85,6 +93,28 @@ public final class SoundManager {
 					.setMaxStreams(MAX_STREAMS)
 					.build();
 		}
+	}
+
+	public void playPauseMusic(){
+		if(musicOn){
+			bgPlayer.pause();
+			musicOn = false;
+		}else{
+			bgPlayer.start();
+			musicOn = true;
+		}
+		SharedPreferences preferences = context.getSharedPreferences("sound", Context.MODE_PRIVATE);
+		SharedPreferences.Editor objEditor = preferences.edit();
+		objEditor.putBoolean("music", musicOn);
+		objEditor.commit();
+	}
+
+	public void playPauseSfx(){
+		sfxOn = !sfxOn;
+		SharedPreferences preferences = context.getSharedPreferences("sound", Context.MODE_PRIVATE);
+		SharedPreferences.Editor objEditor = preferences.edit();
+		objEditor.putBoolean("sfx", sfxOn);
+		objEditor.commit();
 	}
 
 	private void unloadSounds() {

@@ -1,5 +1,7 @@
 package dadm.scaffold;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Build;
@@ -31,7 +33,10 @@ public class ScaffoldActivity extends AppCompatActivity {
                     .commit();
         }
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        soundManager = new SoundManager(getApplicationContext());
+        SharedPreferences soundPreferences = getSharedPreferences("sound", Context.MODE_PRIVATE);
+        boolean sfxOn = soundPreferences.getBoolean("sfx", true);
+        boolean musicOn = soundPreferences.getBoolean("music", true);
+        soundManager = new SoundManager(getApplicationContext(), sfxOn, musicOn);
 
         customFont = Typeface.createFromAsset(getAssets(), "fonts/pixel.ttf");
     }

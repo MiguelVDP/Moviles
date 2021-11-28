@@ -12,7 +12,7 @@ public class BaseCustomDialog implements View.OnTouchListener {
     private boolean isShowing;
     protected final ScaffoldActivity parent;
     private ViewGroup rootLayout;
-    private View rootView;
+    protected View rootView;
 
     public BaseCustomDialog(ScaffoldActivity activity) {
         parent = activity;

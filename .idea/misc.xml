@@ -5,10 +5,14 @@
       <map>
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/btn_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/btn_round_bg.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/dialog_bg.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/music.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/mute_music.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/oval.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/rectangle.xml" value="0.2703125" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/rectangle_bg.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/selector.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/shapedraw.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/shapwdraw.xml" value="0.2703125" />
@@ -16,7 +20,7 @@
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/fragment_game.xml" value="0.4" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/fragment_main_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/my_overlay_dialog.xml" value="0.10925925925925926" />
-        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/pause_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/pause_dialog.xml" value="0.4" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/view_joystick.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/view_keypad.xml" value="0.25416666666666665" />
       </map>
