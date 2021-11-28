@@ -30,7 +30,7 @@ public class BaseFragment extends Fragment {
         }
         return false;
     }
-    protected ScaffoldActivity getScaffoldActivity () {
+    public ScaffoldActivity getScaffoldActivity() {
         return (ScaffoldActivity) getActivity();
     }
 }

@@ -17,10 +17,13 @@
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/shapedraw.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/drawable/shapwdraw.xml" value="0.2703125" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/dialog_game_over.xml" value="0.6" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/dialog_quit.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/fragment_game.xml" value="0.4" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/fragment_main_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/game_over_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/my_overlay_dialog.xml" value="0.10925925925925926" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/pause_dialog.xml" value="0.4" />
+        <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/quit_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/view_joystick.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Miguel/OneDrive/Escritorio/UNI_4/Moviles/Scaffold15/app/src/main/res/layout/view_keypad.xml" value="0.25416666666666665" />
       </map>

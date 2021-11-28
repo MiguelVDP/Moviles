@@ -6,8 +6,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dadm.scaffold.ScaffoldActivity;
+import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
+import dadm.scaffold.input.GameOverDialog;
 import dadm.scaffold.sound.GameControllerState;
 import dadm.scaffold.sound.GameEvent;
 
@@ -19,16 +22,18 @@ public class GameController extends GameObject {
     private int enemiesSpawned;
     private TextView scoreText;
     private long waitingTime;
-    private static final int INITIAL_LIFES = 4;
-    private static final long STOPPING_WAVE_WAITING_TIME = 5000;
+    private static final int INITIAL_LIFES = 1;
+    private static final long STOPPING_WAVE_WAITING_TIME = 2000;
     private GameEngine gE;
     private GameControllerState state;
     private int numLives = 0;
+    private GameFragment parentFrag;
 
     private int score;
 
-    public GameController(GameEngine gameEngine) {
+    public GameController(GameEngine gameEngine, GameFragment fragment) {
         this.gE = gameEngine;
+        parentFrag = fragment;
         // We initialize the pool of items now
         for (int i = 0; i < 10; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
@@ -91,10 +96,19 @@ public class GameController extends GameObject {
             if (waitingTime > STOPPING_WAVE_WAITING_TIME) {
                 state = GameControllerState.SpawningEnemies;
             }
-        } else if (state == GameControllerState.GameOver) {
-            gameEngine.stopGame();
         }
 
+    }
+
+    private void showGameOverDialog() {
+        parentFrag.getScaffoldActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                GameOverDialog quitDialog = new GameOverDialog(parentFrag.getScaffoldActivity());
+                quitDialog.setListener(parentFrag);
+                parentFrag.showDialog(quitDialog);
+            }
+        });
     }
 
 
@@ -115,6 +129,8 @@ public class GameController extends GameObject {
             waitingTime = 0;
         } else if (gameEvent == GameEvent.GameOver) {
             state = GameControllerState.GameOver;
+            gE.pauseGame();
+            showGameOverDialog();
         } else if (gameEvent == GameEvent.LifeAdded) {
             numLives++;
         }

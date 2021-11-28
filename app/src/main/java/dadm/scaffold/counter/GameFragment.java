@@ -14,6 +14,7 @@ import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.FramesPerSecondCounter;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameView;
+import dadm.scaffold.input.GameOverDialogListener;
 import dadm.scaffold.input.PauseDialog;
 import dadm.scaffold.space.LivesCounter;
 import dadm.scaffold.input.JoystickInputController;
@@ -23,7 +24,7 @@ import dadm.scaffold.space.SpaceShipPlayer;
 
 
 public class GameFragment extends BaseFragment implements View.OnClickListener,
-        PauseDialog.PauseDialogListener {
+        PauseDialog.PauseDialogListener, GameOverDialogListener {
     private GameEngine theGameEngine;
 
     public GameFragment() {
@@ -41,6 +42,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.btn_play_pause).setOnClickListener(this);
         final ViewTreeObserver observer = view.getViewTreeObserver();
+        final GameFragment gameFragment = this;
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
             @Override
             public void onGlobalLayout(){
@@ -54,7 +56,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
                 theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.seamlessspace));
 //                theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine));
                 theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
-                theGameEngine.addGameObject(new GameController(theGameEngine));
+                theGameEngine.addGameObject(new GameController(theGameEngine, gameFragment));
                 theGameEngine.addGameObject(new ScoreGameObject(view, R.id.score_value));
                 theGameEngine.addGameObject(new LivesCounter(getView(), R.id.lives_value));
                 theGameEngine.startGame();
@@ -107,6 +109,26 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
     public void exitGame() {
         theGameEngine.stopGame();
         getScaffoldActivity().navigateBack();
+    }
+
+    @Override
+    public void startNewGame() {
+        theGameEngine.stopGame();
+        prepareAndStartGame();
+    }
+
+    private void prepareAndStartGame() {
+        GameView gameView = (GameView)
+                getView().findViewById(R.id.gameView);
+        theGameEngine = new GameEngine(getActivity(), gameView);
+        theGameEngine.setTheInputController(new JoystickInputController(getView()));
+        theGameEngine.setSoundManager(getScaffoldActivity().getSoundManager());
+        theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.seamlessspace));
+        theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
+        theGameEngine.addGameObject(new GameController(theGameEngine, this));
+        theGameEngine.addGameObject(new ScoreGameObject(getView(), R.id.score_value));
+        theGameEngine.addGameObject(new LivesCounter(getView(), R.id.lives_value));
+        theGameEngine.startGame();
     }
 
     @Override
