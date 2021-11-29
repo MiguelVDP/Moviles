@@ -14,12 +14,15 @@ public class SpaceShipPlayer extends Sprite {
 
     private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
     private static final long TIME_BETWEEN_BULLETS = 375;
+    private static final long DOUBLE_SHOOT_TIMEOUT = 5000;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
+    private long timeSincePowerUp;
 
     private int maxX;
     private int maxY;
     private double speedFactor;
+    private boolean doubleShoot;
 
 
     public SpaceShipPlayer(GameEngine gameEngine){
@@ -49,12 +52,16 @@ public class SpaceShipPlayer extends Sprite {
         bullets.add(bullet);
     }
 
+    private void doubleShootOn() {
+        doubleShoot = true;
+        timeSincePowerUp = 0;
+    }
 
     @Override
     public void startGame() {
         positionX = maxX / 2;
         positionY = maxY / 2;
-
+        doubleShoot = false;
     }
 
     @Override
@@ -79,6 +86,14 @@ public class SpaceShipPlayer extends Sprite {
         if (positionY > maxY) {
             positionY = maxY;
         }
+
+        if(doubleShoot){
+            if(timeSincePowerUp > DOUBLE_SHOOT_TIMEOUT){
+                doubleShoot = false;
+            }else{
+                timeSincePowerUp += elapsedMillis;
+            }
+        }
     }
 
     private void checkFiring(long elapsedMillis, GameEngine gameEngine) {
@@ -94,6 +109,14 @@ public class SpaceShipPlayer extends Sprite {
             }
             bullet.init(this, positionX+7 , positionY, angle);
             bullet2.init(this, positionX + width -7 , positionY, -angle);
+            if(doubleShoot){
+                Bullet b1 = getBullet();
+                Bullet b2 = getBullet();
+                b1.init(this, positionX + 30, positionY, angle);
+                b2.init(this, positionX + width - 30, positionY, angle);
+                gameEngine.addGameObject(b1);
+                gameEngine.addGameObject(b2);
+            }
             gameEngine.addGameObject(bullet);
             gameEngine.addGameObject(bullet2);
             timeSinceLastFire = 0;
@@ -121,6 +144,12 @@ public class SpaceShipPlayer extends Sprite {
             EnemyBullet b = (EnemyBullet) otherObject;
             b.removeObject(gameEngine);
             gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+        }else if(otherObject instanceof  DoubleShoot){
+            DoubleShoot d = (DoubleShoot) otherObject;
+            d.removeObject(gameEngine);
+            doubleShootOn();
         }
     }
+
+
 }

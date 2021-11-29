@@ -51,6 +51,7 @@ public class GameController extends GameObject {
 
         for (int i = 0; i < 3; i++){
             lifePwrUpPool.add(new LifeUp(this, gameEngine));
+            dmgPwrUpPool.add(new DoubleShoot(this, gameEngine));
         }
     }
 
@@ -148,7 +149,12 @@ public class GameController extends GameObject {
     }
 
     public void returnToPowerUpPool(PowerUp pwUp) {
-        lifePwrUpPool.add(pwUp);
+        if(pwUp instanceof LifeUp){
+            lifePwrUpPool.add(pwUp);
+        }else if(pwUp instanceof DoubleShoot){
+            dmgPwrUpPool.add(pwUp);
+        }
+
     }
 
     @Override
@@ -172,9 +178,16 @@ public class GameController extends GameObject {
         int num = gE.random.nextInt(2);
         switch (num){
             case 0:
+                if(lifePwrUpPool.isEmpty()){break;}
                 LifeUp a = (LifeUp) lifePwrUpPool.remove(0);
                 a.init(posX, posY);
                 gE.addGameObject(a);
+                break;
+            case 1:
+                if(dmgPwrUpPool.isEmpty()){break;}
+                DoubleShoot d = (DoubleShoot) dmgPwrUpPool.remove(0);
+                d.init(posX, posY);
+                gE.addGameObject(d);
         }
     }
 
