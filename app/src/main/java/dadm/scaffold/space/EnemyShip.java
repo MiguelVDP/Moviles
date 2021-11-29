@@ -122,7 +122,7 @@ public class EnemyShip extends Sprite {
 
             gameEngine.addGameObject(bullet);
             timeSinceLastFire = 0;
-            gameEngine.onGameEvent(GameEvent.LaserFired);
+            gameEngine.onGameEvent(GameEvent.TieFighterFire);
         }else {
             timeSinceLastFire += elapsedMillis;
         }
