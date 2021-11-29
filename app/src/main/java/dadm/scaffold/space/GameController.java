@@ -19,6 +19,7 @@ public class GameController extends GameObject {
     private static final int TIME_BETWEEN_ENEMIES = 1000; //ms
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
+    private List<EnemyShip> enemyShipsPool = new ArrayList<EnemyShip>();
     private int enemiesSpawned;
     private TextView scoreText;
     private long waitingTime;
@@ -28,6 +29,7 @@ public class GameController extends GameObject {
     private GameControllerState state;
     private int numLives = 0;
     private GameFragment parentFrag;
+    private int enemyCounter;
 
     private int score;
 
@@ -37,6 +39,9 @@ public class GameController extends GameObject {
         // We initialize the pool of items now
         for (int i = 0; i < 10; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
+        }
+        for (int i = 0; i < 5; i++){
+            enemyShipsPool.add(new EnemyShip(this, gameEngine));
         }
     }
 
@@ -67,9 +72,17 @@ public class GameController extends GameObject {
             long waveTimestamp = enemiesSpawned * TIME_BETWEEN_ENEMIES; //spawn time for enemies
             if (currentMillis > waveTimestamp) { //if current time is greater than spawn time, then spawn
                 // Spawn a new enemy
-                Asteroid a = asteroidPool.remove(0);
-                a.init(gameEngine);
-                gameEngine.addGameObject(a);
+                if(enemyCounter < 5) {
+                    Asteroid a = asteroidPool.remove(0);
+                    a.init(gameEngine);
+                    gameEngine.addGameObject(a);
+                    enemyCounter++;
+                }else{
+                    EnemyShip e = enemyShipsPool.remove(0);
+                    e.init(gameEngine);
+                    gameEngine.addGameObject(e);
+                    enemyCounter = 0;
+                }
                 enemiesSpawned++;
                 return;
             }
@@ -119,6 +132,10 @@ public class GameController extends GameObject {
 
     public void returnToPool(Asteroid asteroid) {
         asteroidPool.add(asteroid);
+    }
+
+    public void returnToEnemyPool(EnemyShip enemyShip) {
+        enemyShipsPool.add(enemyShip);
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import dadm.scaffold.space.BodyType;
+
 public abstract class Sprite extends ScreenGameObject {
 
     protected double rotation;
@@ -50,7 +52,11 @@ public abstract class Sprite extends ScreenGameObject {
         }
 
         mPaint.setColor(Color.YELLOW);
-        canvas.drawCircle((int)(positionX+width/2),(int)(positionY+height/2),(int)radius,mPaint);
+        if(bodyType == BodyType.Circular){
+            canvas.drawCircle((int)(positionX+width/2),(int)(positionY+height/2),(int)radius,mPaint);
+        }else {
+            canvas.drawRect(mBoundingRect, mPaint);
+        }
 
         matrix.reset();
         matrix.postScale((float) pixelFactor, (float) pixelFactor);

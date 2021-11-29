@@ -6,22 +6,20 @@ import dadm.scaffold.engine.ScreenGameObject;
 import dadm.scaffold.engine.Sprite;
 import dadm.scaffold.sound.GameEvent;
 
-public class Bullet extends Sprite {
+public class EnemyBullet extends Sprite {
 
     private double speedFactor;
 
-    private double speedX, speedY;
-
-    private SpaceShipPlayer parent;
+    private EnemyShip parent;
 
     private GameController gc;
 
     private GameEngine ge;
 
-    public Bullet(GameEngine gameEngine){
-        super(gameEngine, R.drawable.bullet);
+    public EnemyBullet(GameEngine gameEngine) {
+        super(gameEngine, R.drawable.balaenemigos);
 
-        speedFactor = gameEngine.pixelFactor * -300d / 1000d;
+        speedFactor = gameEngine.pixelFactor * 300d / 1000d;
 
         ge=gameEngine;
 
@@ -36,10 +34,9 @@ public class Bullet extends Sprite {
     @Override
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
 
-            positionX += speedX * elapsedMillis;
-            positionY += speedY * elapsedMillis;
+        positionY += speedFactor * elapsedMillis;
 
-        if ( positionY < 0.1 || positionX > gameEngine.width) {
+        if (positionY > gameEngine.height) {
             gameEngine.removeGameObject(this);
             // And return it to the pool
             parent.releaseBullet(this);
@@ -47,15 +44,10 @@ public class Bullet extends Sprite {
     }
 
 
-    public void init(SpaceShipPlayer parentPlayer, double initPositionX, double initPositionY,
-                     double angle) {
+    public void init(EnemyShip enemyShip, double initPositionX, double initPositionY) {
         positionX = initPositionX - width/2;
         positionY = initPositionY - height/2;
-
-        speedX = speedFactor * Math.sin(angle);
-        speedY = speedFactor * Math.cos(angle);
-
-        parent = parentPlayer;
+        parent = enemyShip;
     }
 
     public void removeObject(GameEngine gameEngine) {
@@ -66,15 +58,6 @@ public class Bullet extends Sprite {
 
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
-        if (otherObject instanceof Asteroid) {
-            // Remove both from the game (and return them to their pools)
-            removeObject(gameEngine);
-            Asteroid a = (Asteroid) otherObject;
-            a.removeObject(gameEngine);
-            gameEngine.onGameEvent(GameEvent.AsteroidHit);
-            // Add some score
 
-            //gc.addScore();
-        }
     }
 }

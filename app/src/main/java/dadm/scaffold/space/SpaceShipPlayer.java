@@ -27,6 +27,7 @@ public class SpaceShipPlayer extends Sprite {
         speedFactor = pixelFactor * 100d / 1000d; // We want to move at 100px per second on a 400px tall screen
         maxX = gameEngine.width - width;
         maxY = gameEngine.height - height;
+        bodyType = BodyType.Circular;
 
         initBulletPool(gameEngine);
     }
@@ -107,9 +108,18 @@ public class SpaceShipPlayer extends Sprite {
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Asteroid) {
             gameEngine.removeGameObject(this);
-            //gameEngine.stopGame();
             Asteroid a = (Asteroid) otherObject;
             a.removeObject(gameEngine);
+            gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+        }else if(otherObject instanceof EnemyShip){
+            gameEngine.removeGameObject(this);
+            EnemyShip e = (EnemyShip) otherObject;
+            e.removeObject(gameEngine);
+            gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+        }else if(otherObject instanceof EnemyBullet){
+            gameEngine.removeGameObject(this);
+            EnemyBullet b = (EnemyBullet) otherObject;
+            b.removeObject(gameEngine);
             gameEngine.onGameEvent(GameEvent.SpaceshipHit);
         }
     }

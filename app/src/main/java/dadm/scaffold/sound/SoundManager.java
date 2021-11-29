@@ -109,6 +109,10 @@ public final class SoundManager {
 		objEditor.commit();
 	}
 
+	public void stopMusic(){
+		bgPlayer.stop();
+	}
+
 	public void playPauseSfx(){
 		sfxOn = !sfxOn;
 		SharedPreferences preferences = context.getSharedPreferences("sound", Context.MODE_PRIVATE);

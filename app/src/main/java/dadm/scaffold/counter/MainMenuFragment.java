@@ -85,6 +85,7 @@ public class MainMenuFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void exit() {
+        getScaffoldActivity().getSoundManager().stopMusic();
         getScaffoldActivity().finish();
     }
 }

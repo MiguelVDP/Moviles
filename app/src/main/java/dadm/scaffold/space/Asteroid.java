@@ -19,6 +19,7 @@ public class Asteroid extends Sprite {
         super(gameEngine, R.drawable.a10000);
         this.speed = 200d * pixelFactor/1000d;
         this.gameController = gameController;
+        bodyType = BodyType.Circular;
     }
 
     //ASTEROID BEHAVIOUR, IF YOU WANT TO IMPLEMENT ENEMIES, THEN THEY'LL NEED AN INIT FUNCT WITH ITS BEHAVIOUR
