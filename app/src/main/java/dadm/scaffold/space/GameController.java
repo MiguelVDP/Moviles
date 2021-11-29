@@ -117,7 +117,7 @@ public class GameController extends GameObject {
         parentFrag.getScaffoldActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                GameOverDialog quitDialog = new GameOverDialog(parentFrag.getScaffoldActivity());
+                GameOverDialog quitDialog = new GameOverDialog(parentFrag.getScaffoldActivity(), score);
                 quitDialog.setListener(parentFrag);
                 parentFrag.showDialog(quitDialog);
             }
@@ -151,6 +151,10 @@ public class GameController extends GameObject {
         } else if (gameEvent == GameEvent.LifeAdded) {
             numLives++;
         }
+    }
+
+    public void updateScore(int points) {
+        score = points;
     }
 }
 

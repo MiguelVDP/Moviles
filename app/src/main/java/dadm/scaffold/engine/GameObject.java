@@ -33,4 +33,5 @@ public abstract class GameObject {
     }
 
     public void onGameEvent(GameEvent gameEvent){};
+
 }

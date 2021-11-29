@@ -141,6 +141,8 @@ public class EnemyShip extends Sprite {
         gameEngine.removeGameObject(this);
         //In case of enemy spaceships it is also recommended to return them into the pull back again
         gameController.returnToEnemyPool(this);
+
+        gameEngine.onGameEvent(GameEvent.EnemyShipMissed);
     }
 
     public void removeObject(GameEngine gameEngine) {
@@ -155,6 +157,7 @@ public class EnemyShip extends Sprite {
             lives--;
             if (lives <= 0) {
                 removeObject(gameEngine);
+                gameEngine.onGameEvent(GameEvent.EnemyShipKilled);
             }
             Bullet b = (Bullet) otherObject;
             b.removeObject(gameEngine);

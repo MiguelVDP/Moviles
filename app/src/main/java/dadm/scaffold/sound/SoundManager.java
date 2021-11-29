@@ -58,6 +58,7 @@ public final class SoundManager {
 		loadEventSound(context, GameEvent.AsteroidHit, "Asteroid_explosion_1.wav");
 		loadEventSound(context, GameEvent.SpaceshipHit, "Spaceship_explosion.wav");
 		loadEventSound(context, GameEvent.LaserFired, "xwing_shoot.mp3");
+		loadEventSound(context, GameEvent.EnemyShipKilled, "hitsound.mp3");
 	}
 
 	private void loadMusic() {

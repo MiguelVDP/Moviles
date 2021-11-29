@@ -56,8 +56,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
                 theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.space));
 //                theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine));
                 theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
-                theGameEngine.addGameObject(new GameController(theGameEngine, gameFragment));
-                theGameEngine.addGameObject(new ScoreGameObject(view, R.id.score_value));
+                GameController gameController = new GameController(theGameEngine, gameFragment);
+                theGameEngine.addGameObject(gameController);
+                theGameEngine.addGameObject(new ScoreGameObject(view, R.id.score_value, gameController));
                 theGameEngine.addGameObject(new LivesCounter(getView(), R.id.lives_value));
                 theGameEngine.startGame();
             }
@@ -125,8 +126,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
         theGameEngine.setSoundManager(getScaffoldActivity().getSoundManager());
         theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.seamlessspace));
         theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
-        theGameEngine.addGameObject(new GameController(theGameEngine, this));
-        theGameEngine.addGameObject(new ScoreGameObject(getView(), R.id.score_value));
+        GameController gameController = new GameController(theGameEngine, this);
+        theGameEngine.addGameObject(gameController);
+        theGameEngine.addGameObject(new ScoreGameObject(getView(), R.id.score_value, gameController));
         theGameEngine.addGameObject(new LivesCounter(getView(), R.id.lives_value));
         theGameEngine.startGame();
     }
