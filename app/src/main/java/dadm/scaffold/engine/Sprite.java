@@ -51,12 +51,12 @@ public abstract class Sprite extends ScreenGameObject {
             return;
         }
 
-        mPaint.setColor(Color.YELLOW);
-        if(bodyType == BodyType.Circular){
-            canvas.drawCircle((int)(positionX+width/2),(int)(positionY+height/2),(int)radius,mPaint);
-        }else {
-            canvas.drawRect(mBoundingRect, mPaint);
-        }
+//        mPaint.setColor(Color.YELLOW);
+//        if(bodyType == BodyType.Circular){
+//            canvas.drawCircle((int)(positionX+width/2),(int)(positionY+height/2),(int)radius,mPaint);
+//        }else {
+//            canvas.drawRect(mBoundingRect, mPaint);
+//        }
 
         matrix.reset();
         matrix.postScale((float) pixelFactor, (float) pixelFactor);

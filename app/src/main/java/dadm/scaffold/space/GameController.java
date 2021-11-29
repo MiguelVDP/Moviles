@@ -5,11 +5,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
+import dadm.scaffold.engine.PowerUp;
 import dadm.scaffold.input.GameOverDialog;
 import dadm.scaffold.sound.GameControllerState;
 import dadm.scaffold.sound.GameEvent;
@@ -20,6 +22,9 @@ public class GameController extends GameObject {
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private List<EnemyShip> enemyShipsPool = new ArrayList<EnemyShip>();
+    private List<PowerUp> lifePwrUpPool = new ArrayList<PowerUp>();
+    private List<PowerUp> dmgPwrUpPool = new ArrayList<PowerUp>();
+    private List<PowerUp> cashPwrUpPool = new ArrayList<PowerUp>();
     private int enemiesSpawned;
     private TextView scoreText;
     private long waitingTime;
@@ -42,6 +47,10 @@ public class GameController extends GameObject {
         }
         for (int i = 0; i < 5; i++){
             enemyShipsPool.add(new EnemyShip(this, gameEngine));
+        }
+
+        for (int i = 0; i < 3; i++){
+            lifePwrUpPool.add(new LifeUp(this, gameEngine));
         }
     }
 
@@ -138,6 +147,10 @@ public class GameController extends GameObject {
         enemyShipsPool.add(enemyShip);
     }
 
+    public void returnToPowerUpPool(PowerUp pwUp) {
+        lifePwrUpPool.add(pwUp);
+    }
+
     @Override
     public void onGameEvent(GameEvent gameEvent) {
         super.onGameEvent(gameEvent);
@@ -150,6 +163,18 @@ public class GameController extends GameObject {
             showGameOverDialog();
         } else if (gameEvent == GameEvent.LifeAdded) {
             numLives++;
+        } else if(gameEvent == GameEvent.PowerUpDropped){
+//            dropPowerUp();
+        }
+    }
+
+    public void dropPowerUp(double posX, double posY){
+        int num = gE.random.nextInt(2);
+        switch (num){
+            case 0:
+                LifeUp a = (LifeUp) lifePwrUpPool.remove(0);
+                a.init(posX, posY);
+                gE.addGameObject(a);
         }
     }
 

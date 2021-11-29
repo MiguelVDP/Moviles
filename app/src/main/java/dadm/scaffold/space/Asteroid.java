@@ -44,6 +44,10 @@ public class Asteroid extends Sprite {
         // Return to the pool
         gameEngine.removeGameObject(this);
         gameController.returnToPool(this);
+        int n = gameEngine.random.nextInt(20);
+        if(n == 1){
+            gameController.dropPowerUp(positionX, positionY);
+        }
     }
 
     @Override

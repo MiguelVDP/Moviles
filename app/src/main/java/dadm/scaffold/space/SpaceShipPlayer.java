@@ -90,7 +90,7 @@ public class SpaceShipPlayer extends Sprite {
             }
             double angle = 0;
             if(gameEngine.theInputController.isFiring){
-                angle = 0.523599;
+                angle = 3.14159;
             }
             bullet.init(this, positionX+7 , positionY, angle);
             bullet2.init(this, positionX + width -7 , positionY, -angle);

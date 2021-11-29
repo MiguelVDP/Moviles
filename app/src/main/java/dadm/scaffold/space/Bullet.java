@@ -39,7 +39,7 @@ public class Bullet extends Sprite {
             positionX += speedX * elapsedMillis;
             positionY += speedY * elapsedMillis;
 
-        if ( positionY < 0.1 || positionX > gameEngine.width) {
+        if ( positionY < 0.1 || positionY > gameEngine.height) {
             gameEngine.removeGameObject(this);
             // And return it to the pool
             parent.releaseBullet(this);
@@ -67,11 +67,13 @@ public class Bullet extends Sprite {
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Asteroid) {
+
             // Remove both from the game (and return them to their pools)
             removeObject(gameEngine);
             Asteroid a = (Asteroid) otherObject;
             a.removeObject(gameEngine);
             gameEngine.onGameEvent(GameEvent.AsteroidHit);
+
             // Add some score
 
             //gc.addScore();
