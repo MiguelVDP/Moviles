@@ -4,7 +4,8 @@
     <string name="hello_world">Hello</string>
     <string name="pause">GAME PAUSED</string>
     <string name="start">START GAME</string>
-    <string name="game_title">EMPIRE STRIKE</string>
+    <string name="game_title">SHOOT EM(PIRE) DOWN</string>
+    <string name="game_subtitle">RISE AGAINST YOUR ENEMIES AND \n FIGHT FOR FREEDOM</string>
     <string name="pause_dialog_title">pause title</string>
     <string name="pause_dialog_message">pause message</string>
     <string name="resume">resume</string>
