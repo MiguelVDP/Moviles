@@ -10,5 +10,5 @@ public enum GameEvent {
     GameOver,
     EnemyShipMissed,
     LifeLost,
-    PowerUpDropped;
+    PowerUpDropped, CreditBoost;
 }

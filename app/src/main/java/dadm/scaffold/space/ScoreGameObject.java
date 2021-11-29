@@ -51,9 +51,15 @@ public class ScoreGameObject extends GameObject {
             if(points < 0){ points = 0; }
 
             pointsHaveChanged = true;
+        }else if(gameEvent == GameEvent.CreditBoost){
+            points += 500;
+
+            pointsHaveChanged = true;
         }
 
-        gameController.updateScore(points);
+        if(pointsHaveChanged){
+            gameController.updateScore(points);
+        }
     }
 
     private Runnable mUpdateTextRunnable = new Runnable() {

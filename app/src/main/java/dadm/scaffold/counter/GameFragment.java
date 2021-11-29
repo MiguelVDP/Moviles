@@ -124,7 +124,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener,
         theGameEngine = new GameEngine(getActivity(), gameView);
         theGameEngine.setTheInputController(new JoystickInputController(getView()));
         theGameEngine.setSoundManager(getScaffoldActivity().getSoundManager());
-        theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.seamlessspace));
+        theGameEngine.addGameObject(new ParalaxBackground(theGameEngine,300,R.drawable.space));
         theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
         GameController gameController = new GameController(theGameEngine, this);
         theGameEngine.addGameObject(gameController);
